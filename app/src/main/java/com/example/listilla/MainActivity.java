@@ -15,25 +15,30 @@ public class MainActivity extends AppCompatActivity {
     class Record {
         public int intents;
         public String nom;
+        public int resId = R.drawable.logo;
 
-        public Record(int _intents, String _nom ) {
+        public Record(int _intents, String _nom, int _resId) {
             intents = _intents;
             nom = _nom;
+            resId = _resId;
         }
     }
     // Model = Taula de records: utilitzem ArrayList
-    ArrayList<Record> records;
+     ArrayList<Record> records;
 
     // ArrayAdapter serà l'intermediari amb la ListView
-    ArrayAdapter<Record> adapter;
+    static ArrayAdapter<Record> adapter;
 
     //Seleccion de nombres e intentos
 
     ArrayList<String> listNombres =  new ArrayList<String>();
     ArrayList<Integer> listIntentos =  new ArrayList<Integer>();
 
+    ArrayList<Integer> listImages = new ArrayList<Integer>();
+
     String nombre;
     int n_intentos;
+    int rImagen;
 
 
     @Override
@@ -65,13 +70,21 @@ public class MainActivity extends AppCompatActivity {
         listIntentos.add(80);
         listIntentos.add(14);
 
+        listImages.add(R.drawable.logo);
+        listImages.add(R.drawable.logo1);
+        listImages.add(R.drawable.logo2);
+        listImages.add(R.drawable.logo3);
+        listImages.add(R.drawable.logo4);
+
+
+
 
         // Inicialitzem model
         records = new ArrayList<Record>();
         // Afegim alguns exemples
-        records.add( new Record(33,"Manolo") );
-        records.add( new Record(12,"Pepe") );
-        records.add( new Record(42,"Laura") );
+        records.add( new Record(33,"Manolo", R.drawable.logo) );
+        records.add( new Record(12,"Pepe", R.drawable.logo) );
+        records.add( new Record(42,"Laura", R.drawable.logo) );
 
         // Inicialitzem l'ArrayAdapter amb el layout pertinent
         adapter = new ArrayAdapter<Record>( this, R.layout.list_item, records )
@@ -87,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 // "Pintem" valors (també quan es refresca)
                 ((TextView) convertView.findViewById(R.id.nom)).setText(getItem(pos).nom);
                 ((TextView) convertView.findViewById(R.id.intents)).setText(Integer.toString(getItem(pos).intents));
+                ((ImageView) convertView.findViewById(R.id.image)).setImageResource(getItem(pos).resId);
                 return convertView;
             }
 
@@ -104,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 for (int i=0;i<50;i++) {
                     nombre = listNombres.get( new Random().nextInt(9));
                     n_intentos = listIntentos.get(new Random().nextInt(9));
-                    records.add(new Record(n_intentos, nombre));
+                    rImagen = listImages.get(new Random().nextInt(5));
+                    records.add(new Record(n_intentos, nombre,rImagen));
                 }
                 // notificar l'adapter dels canvis al model
                 adapter.notifyDataSetChanged();
