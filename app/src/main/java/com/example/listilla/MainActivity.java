@@ -8,9 +8,9 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-
     // Model: Record (intents=puntuació, nom)
     class Record {
         public int intents;
@@ -27,10 +27,44 @@ public class MainActivity extends AppCompatActivity {
     // ArrayAdapter serà l'intermediari amb la ListView
     ArrayAdapter<Record> adapter;
 
+    //Seleccion de nombres e intentos
+
+    ArrayList<String> listNombres =  new ArrayList<String>();
+    ArrayList<Integer> listIntentos =  new ArrayList<Integer>();
+
+    String nombre;
+    int n_intentos;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Nombres
+        listNombres.add("Manuel");
+        listNombres.add("Paco");
+        listNombres.add("Jorge");
+        listNombres.add("Clara");
+        listNombres.add("Marta");
+        listNombres.add("Edu");
+        listNombres.add("Ainoa");
+        listNombres.add("Enric");
+        listNombres.add("Albert");
+        listNombres.add("Mar");
+
+        //Intentos
+        listIntentos.add(10);
+        listIntentos.add(11);
+        listIntentos.add(12);
+        listIntentos.add(13);
+        listIntentos.add(44);
+        listIntentos.add(1);
+        listIntentos.add(150);
+        listIntentos.add(5);
+        listIntentos.add(80);
+        listIntentos.add(14);
+
 
         // Inicialitzem model
         records = new ArrayList<Record>();
@@ -67,8 +101,10 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i=0;i<500;i++) {
-                    records.add(new Record(100, "Anonymous"));
+                for (int i=0;i<50;i++) {
+                    nombre = listNombres.get( new Random().nextInt(9));
+                    n_intentos = listIntentos.get(new Random().nextInt(9));
+                    records.add(new Record(n_intentos, nombre));
                 }
                 // notificar l'adapter dels canvis al model
                 adapter.notifyDataSetChanged();
