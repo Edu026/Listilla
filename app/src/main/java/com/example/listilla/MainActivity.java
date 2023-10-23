@@ -8,6 +8,10 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -125,5 +129,21 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+
+        Button b2 = (Button) findViewById(R.id.button2);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(records, new Comparator<Record>() {
+                    @Override
+                    public int compare(Record o1, Record o2) {
+                        return new String (o1.nom).compareTo(o2.nom);
+                    }
+                });
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
     }
 }
